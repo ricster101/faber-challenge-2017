@@ -1,0 +1,1 @@
+Processed data is going to be generated into a txt file in this folder.
