@@ -1,6 +1,11 @@
 import os
 
 
+'''
+Early draft, way to difficult approach for what was needed
+Discarded and given preference to newDataSelector
+To be eliminated
+
 c = 0
 seeLine = 0
 singleReview = []
@@ -36,3 +41,5 @@ saveFile = open(os.path.join('dataProcessed', 'reviewGreater50.txt'), 'w')
 
 for item in trustedReviews:
   saveFile.write("%s\n" % item)
+
+'''
