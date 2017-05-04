@@ -1,5 +1,5 @@
 import urllib.request
-
+import os
 import re
 
 def cleanhtml(raw_html):
@@ -40,6 +40,7 @@ processed = processed.read()
 
 procList = processed.split('\n')
 productGenred = set()
+genreId = []
 
 c = 0
 for i in procList:
@@ -48,7 +49,7 @@ for i in procList:
             productGenred.add(i)
             print(i.split(':')[1].strip())
             url = 'https://www.amazon.com/dp/' + i.split(':')[1].strip()
-            u = urllib.request.Request(url, None, {'User-agent' : 'Chrome/44.0.2403.107'})
+            u = urllib.request.Request(url, None, {'User-agent' : 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'})
 
             opening = urllib.request.urlopen(u).read().decode('utf-8')
             opening = cleanhtml(opening)
@@ -58,8 +59,20 @@ for i in procList:
             for k, j in enumerate(uNoSpace):
                 if 'Genres' in j:
                     genre = " ".join(uNoSpace[k + 1].split())
+                    if 'navmet' in genre:
+                        genre = 'No genre available'
                     print(genre)
             print('-'*20)
-        c += 1
-    if (c == 2):
-        break
+            c += 1
+            genreId.append(genre)
+
+
+productGenred = list(productGenred)
+saver = zip(productGenred, genreId)
+
+
+saveFile = open(os.path.join('dataProcessed', 'productGenres.txt'), 'w')
+
+for item in saver: #saving to txt with line break
+  saveFile.write("%s\n" % item)
+
